@@ -47,6 +47,15 @@
         "purpose": "assessment"
     }
 }}
+
+<head>
+    <style>
+        .daysLeftLabel {
+            color: var(--labelColor);
+        }
+    </style>
+</head>
+
 <div class="list-group-item timeline-event-list-item flex-column pt-2 pb-0 border-0 {{#courseview}}px-0{{/courseview}}{{^courseview}}px-2{{/courseview}}"
         data-region="event-list-item">
     <div class="d-flex flex-wrap pb-1">
@@ -85,7 +94,25 @@
             </div>
         </div>
         <div class="event-name-container flex-grow-1 line-height-3 nowrap text-truncate">
-            <a>TODO: The gradescope progress bar.</a>
+            <span class="daysLeftLabel" id="daysLeft"></span>
+            <script>
+                const dateTimestamp = {{dayTimestamp}};
+                const date1 = 1000*dateTimestamp;
+                const date2 = new Date();
+                // difftime is millisceonds
+                const diffTime = Math.abs(date1- date2.getTime());
+                // get from milliseconds to days
+                const diffDay = ((((diffTime/1000)/60)/60)/24);
+                const daysLeftElement = document.getElementById("daysLeft");
+                if (diffDay < 1.0) {
+                    daysLeftElement.style.setProperty('--labelColor', "red");
+                } else if (diffDay < 3.0) {
+                    daysLeftElement.style.setProperty('--labelColor', "orange");
+                } else {
+                    daysLeftElement.style.setProperty('--labelColor', "green");
+                }
+                daysLeftElement.innerHTML = diffDay;
+            </script>
         </div>
         {{#action.actionable}}
         <div class="d-flex timeline-action-button">
