@@ -95,11 +95,11 @@
         </div>
         <div class="event-name-container flex-grow-1 line-height-3 nowrap text-truncate">
             <span class="daysLeftLabel" id="daysLeft"></span>
-            <script>
-                const dateTimestamp = {{dayTimestamp}};
-                const date1 = 1000*dateTimestamp;
+            {{!<script>
+                const date1 = 1000*{{dayTimestamp;
                 const date2 = new Date();
                 // difftime is millisceonds
+                // where is Date() defined?
                 const diffTime = Math.abs(date1- date2.getTime());
                 // get from milliseconds to days
                 const diffDay = ((((diffTime/1000)/60)/60)/24);
@@ -112,7 +112,7 @@
                     daysLeftElement.style.setProperty('--labelColor', "green");
                 }
                 daysLeftElement.innerHTML = diffDay;
-            </script>
+            </script>}}
         </div>
         {{#action.actionable}}
         <div class="d-flex timeline-action-button">
