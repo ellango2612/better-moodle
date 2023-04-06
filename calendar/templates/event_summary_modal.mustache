@@ -27,7 +27,7 @@
 {{< core/modal }}
     {{$footer}}
         {{#candelete}}
-            <button type="button" style="background-color:black" class="btn btn-secondary" data-action="delete">{{#str}} delete {{/str}}</button>
+            <button type="button" class="btn btn-secondary" data-action="delete">{{#str}} delete {{/str}}</button>
         {{/candelete}}
         {{#action.actionable}}
             <a href="{{action.url}}">{{{action.name}}}</a>
