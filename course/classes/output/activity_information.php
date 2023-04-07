@@ -107,6 +107,23 @@ class activity_information implements renderable, templatable {
             }
             $data->activitydates[] = $date;
         }
+
+        //TODO: make warning time variable, add more options, and bring posted/closing dates into this
+        if(sizeof($this->activitydates) == 2) {
+            $time1 = $this->activitydates[0]['timestamp'];
+            $time2 = $this->activitydates[1]['timestamp'];
+            $current_time = time();
+            $data->countdown = number_format(($time2-$current_time)/($time2-$time1)*100) . "%";
+            if($current_time > $time2){
+                $data->due_color = "red";
+            }
+            else if($time2-$current_time < 86400){
+                $data->due_color = "yellow";
+            }
+            else{
+                $data->due_color = "green";
+            }
+        }
     }
 
     /**

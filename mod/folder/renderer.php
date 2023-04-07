@@ -45,7 +45,9 @@ class mod_folder_renderer extends plugin_renderer_base {
             // Capability to view module must be checked before calling renderer.
             return $output;
         }
-        $output .= $this->output->container_start("mt-n5");
+        
+        
+        $output .= $this->output->container_start("mt-n5 w-75");
         
         if (trim($folder->intro)) {
             if ($folder->display == FOLDER_DISPLAY_INLINE && $cm->showdescription) {
