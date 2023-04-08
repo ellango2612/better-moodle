@@ -66,5 +66,33 @@
 <div class="list-group list-group-flush">
 {{#events}}
     {{> block_timeline/event-list-item }}
+    <script>
+                var dateTimestamp = {{dayTimestamp}};
+                var date1 = 1000*dateTimestamp;
+                var date2 = new Date();
+                // difftime is millisceonds
+                var diffTime = Math.abs(date1- date2.getTime());
+                // get from milliseconds to days
+                var diffDay = Math.floor((((diffTime/1000)/60)/60)/24);
+                var daysLeftElements = document.getElementsByClassName("daysLeftLabel");
+                for (let i = 0; i < daysLeftElements.length; i++) {
+                    if (diffDay < 1) {
+                    daysLeftElements[i].style.setProperty('--labelColor', "red");
+                } else if (diffDay < 3) {
+                    daysLeftElements[i].style.setProperty('--labelColor', "orange");
+                } else {
+                    daysLeftElements[i].style.setProperty('--labelColor', "green");
+                }
+                
+                    daysLeftElements[i].innerHTML = diffDay + " days left";
+                    daysLeftElements[i].classList.add("daysLeftLabel" + i);
+                    if(i>0){
+                        daysLeftElements[i].classList.remove("daysLeftLabel" + (i-1));
+                    } else {
+                        daysLeftElements[i].classList.remove("daysLeftLabel");
+                    }
+                }
+                
+            </script>
 {{/events}}
 </div>

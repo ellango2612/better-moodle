@@ -94,26 +94,7 @@
             </div>
         </div>
         <div class="event-name-container flex-grow-1 line-height-3 nowrap text-truncate">
-            <span class="daysLeftLabel" id="daysLeft"></span>
-            <script>
-                const dateTimestamp = {{dayTimestamp}};
-                const date1 = 1000*dateTimestamp;
-                const date2 = new Date();
-                // difftime is millisceonds
-                const diffTime = Math.abs(date1- date2.getTime());
-                // get from milliseconds to days
-                const diffDay = Math.floor((((diffTime/1000)/60)/60)/24);
-                const daysLeftElement = document.getElementById("daysLeft");
-                if (diffDay < 1) {
-                    daysLeftElement.style.setProperty('--labelColor', "red");
-                } else if (diffDay < 3) {
-                    daysLeftElement.style.setProperty('--labelColor', "orange");
-                } else {
-                    daysLeftElement.style.setProperty('--labelColor', "green");
-                }
-                
-                daysLeftElement.innerHTML = diffDay + " days left";
-            </script>
+            <span class="daysLeftLabel"></span>
         </div>
         {{#action.actionable}}
         <div class="d-flex timeline-action-button">
