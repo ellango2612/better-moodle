@@ -102,16 +102,17 @@
                 // difftime is millisceonds
                 const diffTime = Math.abs(date1- date2.getTime());
                 // get from milliseconds to days
-                const diffDay = ((((diffTime/1000)/60)/60)/24);
+                const diffDay = Math.floor((((diffTime/1000)/60)/60)/24);
                 const daysLeftElement = document.getElementById("daysLeft");
-                if (diffDay < 1.0) {
+                if (diffDay < 1) {
                     daysLeftElement.style.setProperty('--labelColor', "red");
-                } else if (diffDay < 3.0) {
+                } else if (diffDay < 3) {
                     daysLeftElement.style.setProperty('--labelColor', "orange");
                 } else {
                     daysLeftElement.style.setProperty('--labelColor', "green");
                 }
-                daysLeftElement.innerHTML = diffDay;
+                
+                daysLeftElement.innerHTML = diffDay + " days left";
             </script>
         </div>
         {{#action.actionable}}
