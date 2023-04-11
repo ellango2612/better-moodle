@@ -50,7 +50,7 @@
 
 <head>
     <style>
-        .daysLeftLabel {
+        #daysLeft {
             color: var(--labelColor);
         }
     </style>
@@ -95,24 +95,34 @@
         </div>
         <div class="event-name-container flex-grow-1 line-height-3 nowrap text-truncate">
             <span class="daysLeftLabel" id="daysLeft"></span>
-            {{!<script>
-                const date1 = 1000*{{dayTimestamp;
-                const date2 = new Date();
+             <script>
+                var dateTimestamp = {{dayTimestamp}};
+                var date1 = 1000*dateTimestamp;
+                var date2 = new Date();
                 // difftime is millisceonds
-                // where is Date() defined?
-                const diffTime = Math.abs(date1- date2.getTime());
+                var diffTime = Math.abs(date1- date2.getTime());
                 // get from milliseconds to days
-                const diffDay = ((((diffTime/1000)/60)/60)/24);
-                const daysLeftElement = document.getElementById("daysLeft");
-                if (diffDay < 1.0) {
-                    daysLeftElement.style.setProperty('--labelColor', "red");
-                } else if (diffDay < 3.0) {
-                    daysLeftElement.style.setProperty('--labelColor', "orange");
-                } else {
-                    daysLeftElement.style.setProperty('--labelColor', "green");
+                var diffDay = Math.floor((((diffTime/1000)/60)/60)/24);
+                var daysLeftElements = document.getElementsByClassName("daysLeftLabel");
+                for (let i = 0; i < daysLeftElements.length; i++) {
+
+                    daysLeftElements[i].innerHTML = diffDay + " days left";
+                    if (diffDay < 1) {
+                        daysLeftElements[i].style.setProperty('--labelColor', "red");
+                    } else if (diffDay < 3) {
+                        daysLeftElements[i].style.setProperty('--labelColor', "orange");
+                    } else {
+                        daysLeftElements[i].style.setProperty('--labelColor', "green");
+                    }
+                    daysLeftElements[i].classList.add("daysLeftLabel" + i);
+                    if(i>0){
+                        daysLeftElements[i].classList.remove("daysLeftLabel" + (i-1));
+                    } else {
+                        daysLeftElements[i].classList.remove("daysLeftLabel");
+                    }
                 }
-                daysLeftElement.innerHTML = diffDay;
-            </script>}}
+
+            </script>
         </div>
         {{#action.actionable}}
         <div class="d-flex timeline-action-button">
