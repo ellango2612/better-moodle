@@ -107,8 +107,12 @@
                 for (let i = 0; i < daysLeftElements.length; i++) {
 
                     daysLeftElements[i].innerHTML = diffDay + " days left";
+
                     if (diffDay < 1) {
                         daysLeftElements[i].style.setProperty('--labelColor', "red");
+                        if (diffDay == 0) {
+                            daysLeftElements[i].innerHTML = "Due today";
+                        }
                     } else if (diffDay < 3) {
                         daysLeftElements[i].style.setProperty('--labelColor', "orange");
                     } else {
