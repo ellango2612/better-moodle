@@ -94,16 +94,18 @@
             </div>
         </div>
         <div class="event-name-container flex-grow-1 line-height-3 nowrap text-truncate">
+            <div class= "dumbClass">
             <span class="daysLeftLabel" id="daysLeft"></span>
              <script>
                 var dateTimestamp = {{dayTimestamp}};
                 var date1 = 1000*dateTimestamp;
                 var date2 = new Date();
-                // difftime is millisceonds
+                    // difftime is millisceonds
                 var diffTime = Math.abs(date1- date2.getTime());
-                // get from milliseconds to days
+                    // get from milliseconds to days
                 var diffDay = Math.floor((((diffTime/1000)/60)/60)/24);
                 var daysLeftElements = document.getElementsByClassName("daysLeftLabel");
+                    
                 for (let i = 0; i < daysLeftElements.length; i++) {
 
                     daysLeftElements[i].innerHTML = diffDay + " days left";
@@ -125,8 +127,8 @@
                         daysLeftElements[i].classList.remove("daysLeftLabel");
                     }
                 }
-
             </script>
+            </div>
         </div>
         {{#action.actionable}}
         <div class="d-flex timeline-action-button">
