@@ -27,6 +27,7 @@ declare(strict_types=1);
 namespace mod_assign;
 
 use core\activity_dates;
+use PhpXmlRpc\Helper\Date;
 
 /**
  * Class for fetching the important dates in mod_assign for a given module instance and a user.
@@ -50,8 +51,12 @@ class dates extends activity_dates {
         $context = \context_module::instance($this->cm->id);
         $assign = new \assign($context, $this->cm, $course);
 
+
         $timeopen = $this->cm->customdata['allowsubmissionsfromdate'] ?? null;
         $timedue = $this->cm->customdata['duedate'] ?? null;
+        //TODO: make this timecreated instead? database gets mad, I guess 'assign' doesn't include a 'timecreated' field despite there very much being one
+        $timeposted = $this->cm->customdata['timemodified'] ?? null;
+        $timeclose = $this->cm->customdata['cutoffdate'] ?? null;
 
         $activitygroup = groups_get_activity_group($this->cm, true);
         if ($activitygroup) {
@@ -62,6 +67,9 @@ class dates extends activity_dates {
                 }
                 if (!empty($groupoverride->duedate)) {
                     $timedue = $groupoverride->duedate;
+                }
+                if (!empty($groupoverride->cutoffdate)) {
+                    $timeclose = $groupoverride->cutoffdate;
                 }
             }
         }
@@ -75,6 +83,17 @@ class dates extends activity_dates {
                 'dataid' => 'allowsubmissionsfromdate',
                 'label' => get_string($openlabelid, 'mod_assign'),
                 'timestamp' => (int) $timeopen,
+            ];
+            if ($course->relativedatesmode && $assign->can_view_grades()) {
+                $date['relativeto'] = $course->startdate;
+            }
+            $dates[] = $date;
+        } else if($timeposted){
+            $date = [
+                'dataid' => 'allowsubmissionsfromdate',
+                'label' => get_string('activitydate:submissionsopened', 'mod_assign'),
+                'timestamp' => (int) $timeposted,
+                'invisible' => true,
             ];
             if ($course->relativedatesmode && $assign->can_view_grades()) {
                 $date['relativeto'] = $course->startdate;
@@ -94,6 +113,52 @@ class dates extends activity_dates {
             $dates[] = $date;
         }
 
+        if ($timeclose) {
+            $closelabelid = $timeclose > $now ? 'activitydate:submissionsclose' : 'activitydate:submissionsclosed';
+            $date = [
+                'dataid' => 'closedate',
+                'label' => get_string($closelabelid, 'mod_assign'),
+                'timestamp' => (int) $timeclose,
+            ];
+            if ($course->relativedatesmode && $assign->can_view_grades()) {
+                $date['relativeto'] = $course->startdate;
+            }
+            $dates[] = $date;
+        }
+
         return $dates;
+    }
+
+    protected function get_countdown(): array{
+        $dates = $this->get_dates();
+        if($dates[0]['dataid'] != 'allowsubmissionsfromdate' || sizeOf($dates) < 2){
+            return [];
+        }
+
+        $countdown = [];
+        $time1 = $dates[0]['timestamp'];
+        $time2 = $dates[1]['timestamp'];
+        $current_time = time();
+        if($current_time < $time1){
+            return [];
+        }
+
+        $progress1 = number_format(($time2-$current_time)/($time2-$time1)*100) . "%";
+        if($current_time > $time2 && sizeOf($dates) < 3){
+            return [];
+        } else if ($current_time > $time2){
+            $countdown['countdown_color'] = "red";
+            $time3 = $dates[2]['timestamp'];
+            $progress2 = number_format(($time3-$current_time)/($time3-$time2)*100) . "%";
+            $countdown['countdown'] = $progress2;
+        } else if($time2-$current_time < 86400){
+            $countdown['countdown_color'] = "yellow";
+            $countdown['countdown'] = $progress1;
+        } else{
+            $countdown['countdown_color'] = "green";
+            $countdown['countdown'] = $progress1;
+        }
+
+        return $countdown;
     }
 }

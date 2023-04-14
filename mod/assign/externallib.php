@@ -332,6 +332,7 @@ class mod_assign_external extends \mod_assign\external\external_api {
                      'm.sendnotifications, '.
                      'm.sendlatenotifications, ' .
                      'm.sendstudentnotifications, ' .
+                     'm.timecreated, ' .
                      'm.duedate, ' .
                      'm.allowsubmissionsfromdate, '.
                      'm.grade, ' .
@@ -410,6 +411,7 @@ class mod_assign_external extends \mod_assign\external\external_api {
                         'sendnotifications' => $module->sendnotifications,
                         'sendlatenotifications' => $module->sendlatenotifications,
                         'sendstudentnotifications' => $module->sendstudentnotifications,
+                        'timecreated' => $module->timecreated,
                         'duedate' => $assign->get_instance()->duedate,
                         'allowsubmissionsfromdate' => $assign->get_instance()->allowsubmissionsfromdate,
                         'grade' => $module->grade,
@@ -516,6 +518,7 @@ class mod_assign_external extends \mod_assign\external\external_api {
                 'sendnotifications' => new external_value(PARAM_INT, 'send notifications'),
                 'sendlatenotifications' => new external_value(PARAM_INT, 'send notifications'),
                 'sendstudentnotifications' => new external_value(PARAM_INT, 'send student notifications (default)'),
+                'timecreated' => new external_value(PARAM_INT, 'assignment creation date'),
                 'duedate' => new external_value(PARAM_INT, 'assignment due date'),
                 'allowsubmissionsfromdate' => new external_value(PARAM_INT, 'allow submissions from date'),
                 'grade' => new external_value(PARAM_INT, 'grade type'),

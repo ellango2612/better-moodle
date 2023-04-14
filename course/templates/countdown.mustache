@@ -21,10 +21,10 @@
 
     Example context (json):
     {
-        "label": "Opens:",
-        "datestring": "6 April 2021, 6:46 PM"
+        "countdown_color": "red",
+        "countdown": "40%"
     }
 }}
 <div class="rounded bar bg-gray-300">
-    <div class="rounded bar bg-{{due_color}} ml-auto" style="width: {{countdown}}"></div>
+    <div class="rounded bar bg-{{countdown_color}} ml-auto" style="width: {{countdown}}"></div>
 </div>

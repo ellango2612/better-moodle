@@ -253,7 +253,8 @@ class mod_wiki_renderer extends plugin_renderer_base {
         $cminfo = cm_info::create($this->page->cm);
         $completiondetails = \core_completion\cm_completion_details::get_instance($cminfo, $USER->id);
         $activitydates = \core\activity_dates::get_dates_for_module($cminfo, $USER->id);
-        $info = $this->output->activity_information($cminfo, $completiondetails, $activitydates);
+        $countdown = \core\activity_dates::get_countdown_for_module($cminfo, $USER->id);
+        $info = $this->output->activity_information($cminfo, $completiondetails, $activitydates, $countdown);
 
         // Add the rest of the wiki info.
         $info .= $this->output->box(format_module_intro('wiki',
