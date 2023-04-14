@@ -76,6 +76,28 @@ abstract class activity_dates {
     }
 
     /**
+     * Returns a countdown relevant to the activity dates.
+     *
+     * @param cm_info $cm The course module information.
+     * @param int $userid The user ID.
+     * @return array|array[]
+     */
+    public static function get_countdown_for_module(cm_info $cm, int $userid): array{
+        $cmdatesclassname = static::get_dates_classname($cm->modname);
+        if (!$cmdatesclassname) {
+            return [];
+        }
+        if(method_exists($cmdatesclassname,'get_countdown')){
+
+             /** @var activity_dates $dates */
+            $dates = new $cmdatesclassname($cm, $userid);
+            return $dates->get_countdown();
+        }
+        return [];
+
+    }
+
+    /**
      * Fetches the module's dates class implementation if it's available.
      *
      * @param string $modname The activity module name. Usually from cm_info::modname.
@@ -98,4 +120,5 @@ abstract class activity_dates {
      *                 timestamp - The date
      */
     protected abstract function get_dates(): array;
+
 }

@@ -1420,7 +1420,7 @@ $activity-add-hover: theme-color-level('primary', -10) !default;
 
     &:not(.activityinline) {
         border: $border-width solid $border-color;
-        padding: map-get($spacers, 3);
+        //padding: map-get($spacers, 3);
     }
     &.activityinline {
         padding: map-get($spacers, 3) 0;
@@ -1490,7 +1490,7 @@ $activity-add-hover: theme-color-level('primary', -10) !default;
         }
 
         &:not(.activityinline) {
-            padding: map-get($spacers, 4);
+            padding: map-get($spacers, 1);
         }
 
         .activity-info,
@@ -1541,4 +1541,25 @@ $activity-add-hover: theme-color-level('primary', -10) !default;
     &:first-child {
         margin-top: 0;
     }
+}
+
+.bar {
+    width: 100%;
+    height: 1rem;
+}
+
+.bg-gray-300 {
+    background-color: $gray-300;
+}
+
+.bg-green {
+    background-color: $green;
+}
+
+.bg-yellow {
+    background-color: $yellow;
+}
+
+.bg-red {
+    background-color: $red;
 }

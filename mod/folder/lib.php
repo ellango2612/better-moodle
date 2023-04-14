@@ -110,6 +110,7 @@ function folder_add_instance($data, $mform) {
     if (!isset($data->showexpanded)) {
         $data->showexpanded = get_config('folder', 'showexpanded');
     }
+    
     $data->id = $DB->insert_record('folder', $data);
 
     // we need to use context now, so we need to make sure all needed info is already in db

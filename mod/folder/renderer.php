@@ -45,14 +45,41 @@ class mod_folder_renderer extends plugin_renderer_base {
             // Capability to view module must be checked before calling renderer.
             return $output;
         }
-
+        
+        
+        $output .= $this->output->container_start("mt-n5 w-75");
+        
         if (trim($folder->intro)) {
             if ($folder->display == FOLDER_DISPLAY_INLINE && $cm->showdescription) {
                 // for "display inline" do not filter, filters run at display time.
                 $output .= format_module_intro('folder', $folder, $cm->id, false);
             }
         }
+        $output .= $this->output->container_end();
+        
+        $foldertree = new folder_tree($folder, $cm);
+        if ($folder->display == FOLDER_DISPLAY_INLINE) {
+            // Display module name as the name of the root directory.
+            $foldertree->dir['dirname'] = $cm->get_formatted_name(array('escape' => false));
+        }
+        if($cm->showdescription){
+            $output .= $this->output->container_start("box generalbox pt-0 pb-3 foldertree mt-n3");
+        } else {
+            $output .= $this->output->container_start("box generalbox pt-0 pb-3 foldertree");
+        }
+        $output .= $this->render($foldertree);
+        $output .= $this->output->container_end();
+        
         $buttons = '';
+        // Do not append the edit button on the course page.
+        $downloadable = folder_archive_available($folder, $cm);
+        if ($downloadable) {
+            $downloadbutton = new single_button(new moodle_url('/mod/folder/download_folder.php', ['id' => $cm->id]),
+                get_string('downloadfolder', 'folder'), 'get');
+            $downloadbutton->class = 'navitem my-0';
+            $buttons .= $this->render($downloadbutton);
+        }
+        
         // Display the "Edit" button if current user can edit folder contents.
         // Do not display it on the course page for the teachers because there
         // is an "Edit settings" button right next to it with the same functionality.
@@ -61,35 +88,19 @@ class mod_folder_renderer extends plugin_renderer_base {
         if ($canmanagefolderfiles && ($folder->display != FOLDER_DISPLAY_INLINE || !$canmanagecourseactivities)) {
             $editbutton = new single_button(new moodle_url('/mod/folder/edit.php', ['id' => $cm->id]),
                 get_string('edit'), 'post', true);
-            $editbutton->class = 'navitem';
+            $editbutton->class = 'navitem ml-auto my-0';
             $buttons .= $this->render($editbutton);
         }
 
-        // Do not append the edit button on the course page.
-        $downloadable = folder_archive_available($folder, $cm);
-        if ($downloadable) {
-            $downloadbutton = new single_button(new moodle_url('/mod/folder/download_folder.php', ['id' => $cm->id]),
-                get_string('downloadfolder', 'folder'), 'get');
-            $downloadbutton->class = 'navitem ml-auto';
-            $buttons .= $this->render($downloadbutton);
-        }
-
         if ($buttons) {
-            $output .= $this->output->container_start("container-fluid tertiary-navigation");
+            $output .= $this->output->container_start("container-fluid tertiary-navigation py-0");
             $output .= $this->output->container_start("row");
             $output .= $buttons;
             $output .= $this->output->container_end();
             $output .= $this->output->container_end();
         }
 
-        $foldertree = new folder_tree($folder, $cm);
-        if ($folder->display == FOLDER_DISPLAY_INLINE) {
-            // Display module name as the name of the root directory.
-            $foldertree->dir['dirname'] = $cm->get_formatted_name(array('escape' => false));
-        }
-        $output .= $this->output->container_start("box generalbox pt-0 pb-3 foldertree");
-        $output .= $this->render($foldertree);
-        $output .= $this->output->container_end();
+
 
         return $output;
     }
