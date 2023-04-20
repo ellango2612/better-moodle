@@ -69,7 +69,16 @@ class event_exporter_base extends exporter {
 
         $data = new \stdClass();
         $data->id = $event->get_id();
-        $data->name = $event->get_name();
+        $daysLeft = ($endtimestamp - time() + 25200) / 86400;
+        
+        if (floor($daysLeft) < 0) {
+            $data->name = $event->get_name() . " in the past";
+        } else if (floor($daysLeft) == 0) {
+            $data->name = $event->get_name() . " in less than a day";
+        } else {
+            $data->name = $event->get_name() . " in " . floor($daysLeft) .  " days ";
+        }
+        
         $data->description = file_rewrite_pluginfile_urls(
             $event->get_description()->get_value(),
             'pluginfile.php',
