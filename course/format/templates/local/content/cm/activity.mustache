@@ -76,7 +76,7 @@
         {{/afterlink}}
 
         {{#activityinfo}}
-            <div class="activity-info mt-1 mt-md-0">
+            <div class="activity-info mt-1">
                 {{$ core_courseformat/local/content/cm/activity_info}}
                     {{> core_courseformat/local/content/cm/activity_info}}
                 {{/ core_courseformat/local/content/cm/activity_info}}
@@ -108,6 +108,9 @@
                         {{>core_course/activity_date}}
                     {{/core_course/activity_date}}
                 {{/activitydates}}
+                {{#countdown}}
+                    {{>core_course/countdown}}
+                {{/countdown}}
             </div>
         </div>
         {{/hasdates}}

@@ -471,7 +471,7 @@ function assign_get_coursemodule_info($coursemodule) {
 
     $dbparams = array('id'=>$coursemodule->instance);
     $fields = 'id, name, alwaysshowdescription, allowsubmissionsfromdate, intro, introformat, completionsubmit,
-        duedate, cutoffdate, allowsubmissionsfromdate';
+        duedate, cutoffdate, allowsubmissionsfromdate, timemodified';
     if (! $assignment = $DB->get_record('assign', $dbparams, $fields)) {
         return false;
     }
@@ -491,6 +491,9 @@ function assign_get_coursemodule_info($coursemodule) {
     }
 
     // Populate some other values that can be used in calendar or on dashboard.
+    if ($assignment->timemodified) {
+        $result->customdata['timemodified'] = $assignment->timemodified;
+    }
     if ($assignment->duedate) {
         $result->customdata['duedate'] = $assignment->duedate;
     }

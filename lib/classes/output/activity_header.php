@@ -179,7 +179,8 @@ class activity_header implements \renderable, \templatable {
         if (!$this->hidecompletion) {
             $completiondetails = \core_completion\cm_completion_details::get_instance($this->page->cm, $this->user->id);
             $activitydates = \core\activity_dates::get_dates_for_module($this->page->cm, $this->user->id);
-            $completion = $output->activity_information($this->page->cm, $completiondetails, $activitydates);
+            $countdown = \core\activity_dates::get_countdown_for_module($this->page->cm, $this->user->id);
+            $completion = $output->activity_information($this->page->cm, $completiondetails, $activitydates, $countdown);
         }
 
         $format = course_get_format($this->page->course);

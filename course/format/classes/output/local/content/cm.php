@@ -206,6 +206,7 @@ class cm implements named_templatable, renderable {
         $activitydates = [];
         if ($course->showactivitydates) {
             $activitydates = activity_dates::get_dates_for_module($this->mod, $USER->id);
+            $countdown = activity_dates::get_countdown_for_module($this->mod, $USER->id);
         }
 
         $activityinfodata = (object) ['hasdates' => false, 'hascompletion' => false];
@@ -217,7 +218,7 @@ class cm implements named_templatable, renderable {
         $showcompletioninfo = $completiondetails->has_completion() && ($showcompletionconditions ||
             (!$completiondetails->is_automatic() && $completiondetails->show_manual_completion()));
         if ($showcompletioninfo || !empty($activitydates)) {
-            $activityinfo = new activity_information($this->mod, $completiondetails, $activitydates);
+            $activityinfo = new activity_information($this->mod, $completiondetails, $activitydates, $countdown);
             $activityinfodata = $activityinfo->export_for_template($output);
         }
 

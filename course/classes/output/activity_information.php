@@ -56,6 +56,9 @@ class activity_information implements renderable, templatable {
     /** @var cm_completion_details The user's completion details for this activity. */
     protected $cmcompletion = null;
 
+    /** @var array Any relevant countdown for this activity. */
+    protected $countdown = null;
+
     /**
      * Constructor.
      *
@@ -63,10 +66,11 @@ class activity_information implements renderable, templatable {
      * @param cm_completion_details $cmcompletion The course module information.
      * @param array $activitydates The activity dates.
      */
-    public function __construct(cm_info $cminfo, cm_completion_details $cmcompletion, array $activitydates) {
+    public function __construct(cm_info $cminfo, cm_completion_details $cmcompletion, array $activitydates, array $countdown) {
         $this->cminfo = $cminfo;
         $this->cmcompletion = $cmcompletion;
         $this->activitydates = $activitydates;
+        $this->countdown = $countdown;
     }
 
     /**
@@ -82,6 +86,10 @@ class activity_information implements renderable, templatable {
         $data->activityname = $this->cminfo->get_formatted_name();
         $this->build_dates_data($data);
         $data->hasdates = !empty($this->activitydates);
+        if(!empty($this->countdown)){
+            $data->countdown->countdown = $this->countdown['countdown'];
+            $data->countdown->countdown_color = $this->countdown['countdown_color'];
+        }
 
         return $data;
     }

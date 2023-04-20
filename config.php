@@ -8,17 +8,17 @@ $CFG->dbtype    = 'pgsql';
 $CFG->dblibrary = 'native';
 $CFG->dbhost    = 'localhost';
 $CFG->dbname    = 'moodle';
-$CFG->dbuser    = 'ellango';
-$CFG->dbpass    = 'ella2612@@';
+$CFG->dbuser    = 'testuser';
+$CFG->dbpass    = 'badpassword';
 $CFG->prefix    = 'mdl_';
 $CFG->dboptions = array (
   'dbpersist' => 0,
-  'dbport' => '',
+  'dbport' => 5432,
   'dbsocket' => '',
 );
 
 $CFG->wwwroot   = 'http://localhost:8888';
-$CFG->dataroot  = '/Users/ellango/Desktop/moodledata';
+$CFG->dataroot  = '/Users/bmorrell/git/moodledata';
 $CFG->admin     = 'admin';
 
 $CFG->directorypermissions = 0777;
