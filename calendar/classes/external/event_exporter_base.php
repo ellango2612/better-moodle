@@ -70,6 +70,8 @@ class event_exporter_base extends exporter {
         $data = new \stdClass();
         $data->id = $event->get_id();
         $data->name = $event->get_name();
+        //Moved date stuff below, where we check if the event is the right kind
+        
         $data->description = file_rewrite_pluginfile_urls(
             $event->get_description()->get_value(),
             'pluginfile.php',
@@ -115,23 +117,31 @@ class event_exporter_base extends exporter {
                 );
             }
 
+            // We only want to add date statements to assignment and quiz events
+            // These events have names like [name] is due or [name] opens/closes,
+            // we want to add a time estimate to that statement
             if ($cm->get('modname') == 'assign' || $cm->get('modname') == 'quiz') {
                 $course = $related['course'];
                 if(!empty($course)){
                     if ($course->showactivitydates){
-                        $days_left = ($starttimestamp - time())/86400; //TODO const
-                        $day_event = usergetdate($starttimestamp);
+                        $days_left = ($endtimestamp - time())/86400; //TODO make this a const, not a magic number
+                        $day_event = usergetdate($endtimestamp);//get the date information for easier day math
                         $day_now = usergetdate(time());
                         
                         if ($day_event['hours']*360 + $day_event['minutes']*60 + $day_event['seconds'] <= $day_now['hours']*360 + $day_now['minutes']*60 + $day_now['seconds']) {
-                            //round number of days correctly
+                            //round number of days correctly, it was bugging me that sometimes the number of days was weird
                             $days_left = floor($days_left);
                         } else {
                             $days_left = ceil($days_left);
                         }
-
+                        // this is probably inefficient, but covers all of the cases and proper grammar for
+                        // number of days, plus special cases for today, yesterday, tomorrow
+                        // All of this should probably be done using the language builtins - there are strings for
+                        // things like "Opens" which are defined somewhere and may help generalize the display
+                        // If we make that change, probably want to somehow strip off "is due" or "Closes" and start
+                        // from scratch
                         $days_left_str = '';
-                        if ($day_event['year'] == $day_now['year'] && $day_event['yday'] == $day_now['yday']){//TODO: does this work
+                        if ($day_event['year'] == $day_now['year'] && $day_event['yday'] == $day_now['yday']){
                             $days_left_str = ' today';
                         } else if (($day_event['year'] == $day_now['year'] && $day_event['yday'] == $day_now['yday']+1)
                                         || ($day_event['yday'] == 0 && $day_now['mday'] == 31 && $day_now['month'] == 'December' && $day_now['year'] == $day_event['year'] - 1)){
@@ -139,20 +149,21 @@ class event_exporter_base extends exporter {
                         } else if (($day_event['year'] == $day_now['year'] && $day_event['yday'] == $day_now['yday']-1)
                                         || ($day_now['yday'] == 0 && $day_event['mday'] == 31 && $day_event['month'] == 'December' && $day_event['year'] = $day_now['year'] - 1)){
                             $days_left_str = ' yesterday';
-                        } else if ($starttimestamp < time()){
-                            $days_left_str = ' ' . abs($days_left) . (abs($days_left) == 1 ? ' day ago' : ' days ago');
+                        } else if ($endtimestamp < time()){
+                            $days_left_str = ' ' . abs($days_left) . (abs($days_left) == 1 ? ' day ago' : ' days ago');//plurals
                         } else {
                             $days_left_str = ' in ' . $days_left . ($days_left == 1 ? ' day' : ' days');
                         }
 
-                        if ($starttimestamp < time()){
-                            //modify the string to be past tense - TODO this should be done using getstring and lang
+                        if ($endtimestamp < time()){
+                            // modify the string to be past tense - TODO this should be done using getstring
+                            // and lang because this is very english-specific math
                             if($cm->get('modname') == 'assign'){
                                 $data->name = substr($data->name, 0,-7) . ' was due' . $days_left_str;
                             } else {
                                 $data->name = substr($data->name, 0,-1) . (substr($data->name,0,-2) == 'es' ? 'd' : 'ed') . $days_left_str;
                             }
-                        } else {
+                        } else {//we don't need to strip off "is due" for future events
                             $data->name = $data->name . $days_left_str;
                         }
                     }
