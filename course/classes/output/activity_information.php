@@ -114,6 +114,11 @@ class activity_information implements renderable, templatable {
                 }
             }
             $data->activitydates[] = $date;
+            if($date['align'] == 'right'){
+                $data->rightdates[] = $date;
+            } else {
+                $data->leftdates[] = $date;
+            }
         }
     }
 

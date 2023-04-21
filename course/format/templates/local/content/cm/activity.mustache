@@ -102,16 +102,23 @@
     {{#activityinfo}}
         {{#hasdates}}
         <div data-region="activity-dates" class="activity-dates small course-description-item">
-            <div class="description-inner">
-                {{#activitydates}}
-                    {{$core_course/activity_date}}
-                        {{>core_course/activity_date}}
-                    {{/core_course/activity_date}}
-                {{/activitydates}}
-                {{#countdown}}
-                    {{>core_course/countdown}}
-                {{/countdown}}
+          <div class="description-inner">
+            <div class="d-flex flex-row">
+              <div class="mr-auto mt-auto">
+                  {{#leftdates}}
+                    {{>core_course/activity_date}}
+                  {{/leftdates}}
+              </div>
+              <div>
+                  {{#rightdates}}
+                    {{>core_course/activity_date}}
+                  {{/rightdates}}
+              </div>
             </div>
+              {{#countdown}}
+                  {{>core_course/countdown}}
+              {{/countdown}}
+          </div>
         </div>
         {{/hasdates}}
     {{/activityinfo}}

@@ -95,6 +95,7 @@
         </div>
         <div class="event-name-container flex-grow-1 line-height-3 nowrap text-truncate">
             <div class= "dumbClass">
+            <div class="text-uppercase small">{{activitydates}}</div>
             <span class="daysLeftLabel" id="daysLeft"></span>
              <script>
                 var dateTimestamp = {{dayTimestamp}};
@@ -105,7 +106,7 @@
                     // get from milliseconds to days
                 var diffDay = Math.floor((((diffTime/1000)/60)/60)/24);
                 var daysLeftElements = document.getElementsByClassName("daysLeftLabel");
-                    
+
                 for (let i = 0; i < daysLeftElements.length; i++) {
 
                     daysLeftElements[i].innerHTML = diffDay + " days left";

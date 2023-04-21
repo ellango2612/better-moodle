@@ -106,6 +106,7 @@ class dates extends activity_dates {
                 'dataid' => 'duedate',
                 'label' => get_string('activitydate:submissionsdue', 'mod_assign'),
                 'timestamp' => (int) $timedue,
+                'align' => 'right',
             ];
             if ($course->relativedatesmode && $assign->can_view_grades()) {
                 $date['relativeto'] = $course->startdate;
@@ -119,6 +120,7 @@ class dates extends activity_dates {
                 'dataid' => 'closedate',
                 'label' => get_string($closelabelid, 'mod_assign'),
                 'timestamp' => (int) $timeclose,
+                'align' => 'right',
             ];
             if ($course->relativedatesmode && $assign->can_view_grades()) {
                 $date['relativeto'] = $course->startdate;
@@ -129,6 +131,7 @@ class dates extends activity_dates {
         return $dates;
     }
 
+    //TODO: comments
     protected function get_countdown(): array{
         $dates = $this->get_dates();
         if($dates[0]['dataid'] != 'allowsubmissionsfromdate' || sizeOf($dates) < 2){
@@ -136,22 +139,25 @@ class dates extends activity_dates {
         }
 
         $countdown = [];
-        $time1 = $dates[0]['timestamp'];
+        $opentime = $dates[0]['timestamp'];//TODO: rename variables
         $time2 = $dates[1]['timestamp'];
         $current_time = time();
-        if($current_time < $time1){
-            return [];
-        }
-
-        $progress1 = number_format(($time2-$current_time)/($time2-$time1)*100) . "%";
-        if($current_time > $time2 && sizeOf($dates) < 3){
+        // if($current_time < $opentime){ //Combined ifs
+        //     return [];
+        // }
+        //TODO: after closing, make invisible
+        $progress1 = number_format(($time2-$current_time)/($time2-$opentime)*100) . "%";
+        if($current_time < $opentime || ($current_time > $time2 && sizeOf($dates) < 3)){
             return [];
         } else if ($current_time > $time2){
             $countdown['countdown_color'] = "red";
             $time3 = $dates[2]['timestamp'];
             $progress2 = number_format(($time3-$current_time)/($time3-$time2)*100) . "%";
             $countdown['countdown'] = $progress2;
-        } else if($time2-$current_time < 86400){
+            if($current_time > $time3){
+                $countdown = [];
+            }
+        } else if($time2-$current_time < 86400){//TODO: constant (variable)
             $countdown['countdown_color'] = "yellow";
             $countdown['countdown'] = $progress1;
         } else{

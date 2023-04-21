@@ -97,7 +97,7 @@ class event_exporter_base extends exporter {
             $data->repeatid = $repeats->get_id();
             $data->eventcount = $repeats->get_num() + 1;
         }
-
+        
         if ($cm = $event->get_course_module()) {
             $data->modulename = $cm->get('modname');
             $data->instance = $cm->get('id');
@@ -113,6 +113,50 @@ class event_exporter_base extends exporter {
                     'core_calendar_get_event_action_string',
                     [$event->get_type()]
                 );
+            }
+
+            if ($cm->get('modname') == 'assign' || $cm->get('modname') == 'quiz') {
+                $course = $related['course'];
+                if(!empty($course)){
+                    if ($course->showactivitydates){
+                        $days_left = ($starttimestamp - time())/86400; //TODO const
+                        $day_event = usergetdate($starttimestamp);
+                        $day_now = usergetdate(time());
+                        
+                        if ($day_event['hours']*360 + $day_event['minutes']*60 + $day_event['seconds'] <= $day_now['hours']*360 + $day_now['minutes']*60 + $day_now['seconds']) {
+                            //round number of days correctly
+                            $days_left = floor($days_left);
+                        } else {
+                            $days_left = ceil($days_left);
+                        }
+
+                        $days_left_str = '';
+                        if ($day_event['year'] == $day_now['year'] && $day_event['yday'] == $day_now['yday']){//TODO: does this work
+                            $days_left_str = ' today';
+                        } else if (($day_event['year'] == $day_now['year'] && $day_event['yday'] == $day_now['yday']+1)
+                                        || ($day_event['yday'] == 0 && $day_now['mday'] == 31 && $day_now['month'] == 'December' && $day_now['year'] == $day_event['year'] - 1)){
+                            $days_left_str = ' tomorrow';
+                        } else if (($day_event['year'] == $day_now['year'] && $day_event['yday'] == $day_now['yday']-1)
+                                        || ($day_now['yday'] == 0 && $day_event['mday'] == 31 && $day_event['month'] == 'December' && $day_event['year'] = $day_now['year'] - 1)){
+                            $days_left_str = ' yesterday';
+                        } else if ($starttimestamp < time()){
+                            $days_left_str = ' ' . abs($days_left) . (abs($days_left) == 1 ? ' day ago' : ' days ago');
+                        } else {
+                            $days_left_str = ' in ' . $days_left . ($days_left == 1 ? ' day' : ' days');
+                        }
+
+                        if ($starttimestamp < time()){
+                            //modify the string to be past tense - TODO this should be done using getstring and lang
+                            if($cm->get('modname') == 'assign'){
+                                $data->name = substr($data->name, 0,-7) . ' was due' . $days_left_str;
+                            } else {
+                                $data->name = substr($data->name, 0,-1) . (substr($data->name,0,-2) == 'es' ? 'd' : 'ed') . $days_left_str;
+                            }
+                        } else {
+                            $data->name = $data->name . $days_left_str;
+                        }
+                    }
+                }
             }
         }
 
@@ -269,7 +313,7 @@ class event_exporter_base extends exporter {
                 'type' => PARAM_BOOL
             ],
             'iscourseevent' => [
-                'type' => PARAM_BOOL
+                'type' => PARAM_BOOL,
             ],
             'iscategoryevent' => [
                 'type' => PARAM_BOOL
@@ -324,6 +368,7 @@ class event_exporter_base extends exporter {
         } else if ($event->get_type() == 'category') {
             $values['iscategoryevent'] = true;
         }
+
         $timesort = $event->get_times()->get_sort_time()->getTimestamp();
         $iconexporter = new event_icon_exporter($event, ['context' => $context]);
         $identifier = 'type' . $values['normalisedeventtype'];
@@ -333,7 +378,7 @@ class event_exporter_base extends exporter {
             $values['normalisedeventtype'] = 'other';
         }
         $values['normalisedeventtypetext'] = $stringexists ? get_string($identifier, 'calendar') : '';
-
+        
         $purpose = 'none';
         if ($moduleproxy) {
             $purpose = plugin_supports('mod', $moduleproxy->get('modname'), FEATURE_MOD_PURPOSE, 'none');

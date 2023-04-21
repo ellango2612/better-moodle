@@ -178,7 +178,7 @@ class calendar_event_exporter extends event_exporter_base {
             // This is a course event.
             $values = array_merge($values, $this->get_course_timestamp_limits($event));
         }
-
+        
         return $values;
     }
 

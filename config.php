@@ -21,6 +21,11 @@ $CFG->wwwroot   = 'http://localhost:8888';
 $CFG->dataroot  = '/Users/bmorrell/git/moodledata';
 $CFG->admin     = 'admin';
 
+$CFG->phpunit_prefix = 'phpu_';
+$CFG->phpunit_dataroot = '/Users/bmorrell/git/phpu_moodledata';
+
+$CFG->dirroot = '/Users/bmorrell/git/better-moodle';
+
 $CFG->directorypermissions = 0777;
 
 require_once(__DIR__ . '/lib/setup.php');

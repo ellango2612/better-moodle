@@ -72,14 +72,23 @@
 
     {{#hasdates}}
     <div data-region="activity-dates" class="activity-dates">
-        <div class="description-inner">
-            {{#activitydates}}
+      <div class="description-inner">
+        <div class="d-flex flex-row">
+          <div class="mr-auto mt-auto">
+              {{#leftdates}}
                 {{>core_course/activity_date}}
-            {{/activitydates}}
-            {{#countdown}}
-                {{>core_course/countdown}}
-            {{/countdown}}
+              {{/leftdates}}
+          </div>
+          <div>
+              {{#rightdates}}
+                {{>core_course/activity_date}}
+              {{/rightdates}}
+          </div>
         </div>
+          {{#countdown}}
+              {{>core_course/countdown}}
+          {{/countdown}}
+      </div>
     </div>
     {{/hasdates}}
 </div>
