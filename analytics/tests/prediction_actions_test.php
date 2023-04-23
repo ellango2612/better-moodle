@@ -30,6 +30,23 @@ require_once(__DIR__ . '/fixtures/test_target_shortname.php');
  */
 class prediction_actions_test extends \advanced_testcase {
 
+    /** @var \core_analytics\model avoid using deprecated feature */
+    private $model;
+    /** @var stdClass avoid using deprecated feature */
+    private $modelobj;
+    /** @var stdClass avoid using deprecated feature */
+    private $course1;
+    /** @var stdClass avoid using deprecated feature */
+    private $course2;
+    /** @var \context_course avoid using deprecated feature */
+    private $context;
+    /** @var stdClass avoid using deprecated feature */
+    private $teacher1;
+    /** @var stdClass avoid using deprecated feature */
+    private $teacher2;
+    /** @var stdClass avoid using deprecated feature */
+    private $teacher3;
+
     /**
      * Common startup tasks
      */

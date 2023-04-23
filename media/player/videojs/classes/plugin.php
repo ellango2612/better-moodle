@@ -42,6 +42,8 @@ class media_videojs_plugin extends core_media_player_native {
     protected $youtube = false;
     /** @var bool Need to use Ogv.JS Tech plugin or not. */
     protected $ogvtech = false;
+    /** @var array deprecated warning suppressor*/
+    protected $matches = [];
     /** @var array Ogv.JS supported extensions */
     protected $ogvsupportedextensions = [
         '.ogv',

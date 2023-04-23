@@ -113,6 +113,12 @@ class HTML_QuickForm_Renderer_Tableless extends HTML_QuickForm_Renderer_Default
     */
     var $_stopFieldsetElements = array();
 
+    /** @var string avoid using deprecated feature */
+    protected $_reqHTML;
+
+    /** @var string avoid using deprecated feature*/
+    protected $_advancedHTML;
+
    /**
     * Constructor
     *

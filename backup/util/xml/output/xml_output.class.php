@@ -48,6 +48,7 @@ abstract class xml_output {
     protected $currentbuffersize;// Current buffer size
 
     protected $running; // To know if output is running
+    protected $finishtime; // used deprecated feature?
 
     public function __construct($usebuffer = true) {
         $this->inittime   = microtime(true);

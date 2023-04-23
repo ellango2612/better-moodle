@@ -72,6 +72,12 @@ class cache_config {
     protected $configlocks = array();
 
     /**
+     * Something that is defined, but dynamic properties are deprecated
+     * @var array
+     */
+    protected $configlockmappings = array();
+
+    /**
      * The site identifier used when the cache config was last saved.
      * @var string
      */

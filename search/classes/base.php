@@ -67,6 +67,13 @@ abstract class base {
     protected static $levels = [CONTEXT_SYSTEM];
 
     /**
+     * avoiding deprecated php feature
+     *
+     * @var ?
+     */
+    protected $areaid = null;
+
+    /**
      * Constructor.
      *
      * @throws \coding_exception

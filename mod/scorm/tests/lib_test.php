@@ -45,6 +45,15 @@ require_once($CFG->dirroot . '/mod/scorm/lib.php');
  */
 class lib_test extends \advanced_testcase {
 
+    public $course;
+    public $scorm;
+    public $context;
+    public $cm;
+    public $student;
+    public $teacher;
+    public $studentrole;
+    public $teacherrole;
+
     /**
      * Set up for every test
      */

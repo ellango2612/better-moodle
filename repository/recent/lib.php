@@ -43,6 +43,8 @@ class repository_recent extends repository {
 
     /** @var int only retrieve files within the time limit */
     protected $timelimit;
+    /** @var int avoiding deprecated php features */
+    protected $number;
 
     /**
      * Initialize recent plugin

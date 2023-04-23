@@ -33,6 +33,9 @@ defined('MOODLE_INTERNAL') || die();
  */
 class testable_plugininfo_base extends \core\plugininfo\base {
 
+    public $supported;//added due to deprecated dynamic creation
+    public $incompatible;
+
     public static function fake_plugin_instance($type, $typerootdir, $name, $namerootdir, $typeclass, $pluginman) {
         return self::make_plugin_instance($type, $typerootdir, $name, $namerootdir, $typeclass, $pluginman);
     }

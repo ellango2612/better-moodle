@@ -3152,6 +3152,8 @@ class curl {
     private $securityhelper;
     /** @var bool ignoresecurity a flag which can be supplied to the constructor, allowing security to be bypassed. */
     private $ignoresecurity;
+    /** @var array deprecated feature warning suppression */
+    private $_tmp_file_post_params;
     /** @var array $mockresponses For unit testing only - return the head of this list instead of making the next request. */
     private static $mockresponses = [];
 
@@ -4241,6 +4243,8 @@ class curl {
 class curl_cache {
     /** @var string Path to cache directory */
     public $dir = '';
+    /** @var ?? avoid using deprecated features */
+    public $ttl = null;
 
     /**
      * Constructor

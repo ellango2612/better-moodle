@@ -28,6 +28,16 @@ use core_competency\course_module_competency;
  */
 class processor_test extends \advanced_testcase {
 
+    public $f1;
+    public $f1comps;
+    public $f2;
+    public $f2comps;
+    public $c1;
+    public $c2;
+    public $cms;
+    public $ccs;
+    public $cmcs;
+
     /**
      * This sets up a few things, and assign class variables.
      *

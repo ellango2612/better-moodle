@@ -31,6 +31,11 @@ class component_test extends advanced_testcase {
      */
     const SUBSYSTEMCOUNT = 75;
 
+    /* @var string avoid using deprecated features */
+    public $oldpsr0namespaces;
+    /* @var string avoid using deprecated features */
+    public $oldpsr4namespaces;
+
     public function setUp(): void {
         $psr0namespaces = new ReflectionProperty('core_component', 'psr0namespaces');
         $psr0namespaces->setAccessible(true);

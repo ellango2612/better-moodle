@@ -37,6 +37,16 @@ require_once($CFG->dirroot . '/mod/wiki/lib.php');
  */
 class externallib_test extends externallib_advanced_testcase {
 
+    public $course;
+    public $wiki;
+    public $context;
+    public $cm;
+    public $student;
+    public $student2;
+    public $teacher;
+    public $studentrole;
+    public $teacherrole;
+
     /**
      * Set up for every test
      */

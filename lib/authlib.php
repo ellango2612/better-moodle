@@ -120,6 +120,12 @@ class auth_plugin_base {
     /** @var array Stores extra information available to the logged in event. */
     protected $extrauserinfo = [];
 
+    /** @var string avoiding deprecated php feature */
+    protected $roleauth = null;
+
+    /** @var string avoiding deprecated php feature */
+    protected $pluginconfig = null;
+
     /**
      * This is the primary method that is used by the authenticate_user_login()
      * function in moodlelib.php.

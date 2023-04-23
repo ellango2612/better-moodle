@@ -531,6 +531,10 @@ abstract class repository implements cacheable_object {
     public $instance;
     /** @var string Type of repository (webdav, google_docs, dropbox, ...). Read from $this->get_typename(). */
     protected $typename;
+    /** @var string avoiding using deprecated php */
+    public $name;
+    /** @var bool avoiding using deprecated php */
+    public $super_called;
 
     /**
      * Constructor

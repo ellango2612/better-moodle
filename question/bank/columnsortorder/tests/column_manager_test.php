@@ -40,6 +40,10 @@ require_once($CFG->dirroot . '/question/classes/external.php');
  */
 class column_manager_test extends advanced_testcase {
 
+    public $course;
+    public $questionbank;
+    public $columns;
+    public $columnmanager;
     /**
      * Setup testcase.
      */

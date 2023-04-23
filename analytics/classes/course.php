@@ -127,6 +127,13 @@ class course implements \core_analytics\analysable {
     protected $ntotallogs = null;
 
     /**
+     * avoid deprecated feature
+     *
+     * @var ?
+     */
+    protected $now = null;
+
+    /**
      * Course manager constructor.
      *
      * Use self::instance() instead to get cached copies of the course. Instances obtained

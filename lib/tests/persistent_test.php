@@ -730,6 +730,13 @@ class core_testable_persistent extends persistent {
             )
         );
     }
+    protected $beforevalidate; //was dynamic; that is deprecated
+    protected $beforecreate;
+    protected $beforeupdate;
+    protected $beforedelete;
+    protected $aftercreate;
+    protected $afterupdate;
+    protected $afterdelete;
 
     protected function before_validate() {
         $this->beforevalidate = true;
@@ -750,7 +757,7 @@ class core_testable_persistent extends persistent {
     protected function after_create() {
         $this->aftercreate = true;
     }
-
+    //TODO: wtf why is $result unused
     protected function after_update($result) {
         $this->afterupdate = true;
     }

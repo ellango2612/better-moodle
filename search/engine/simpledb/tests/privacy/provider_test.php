@@ -42,6 +42,16 @@ require_once($CFG->dirroot . '/search/tests/fixtures/mock_search_area.php');
  */
 class provider_test extends \core_privacy\tests\provider_testcase {
 
+    public $engine;
+    public $search;
+    public $generator;
+    public $c1;
+    public $c2;
+    public $c1context;
+    public $c2context;
+    public $u1;
+    public $u2;
+
     public function setUp(): void {
         global $DB;
 

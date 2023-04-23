@@ -690,6 +690,30 @@ class theme_config {
     public $activityheaderconfig = [];
 
     /**
+     * Avoid deprecated feature
+     * @var ?
+     */
+    public $editor_scss = null;
+
+    /**
+     * Avoid deprecated feature
+     * @var ?
+     */
+    public $addblockposition = null;
+
+    /**
+     * Avoid deprecated feature
+     * @var ?
+     */
+    public $iconsystem = null;
+
+    /**
+     * Avoid deprecated feature
+     * @var bool
+     */
+    public $haseditswitch = false;
+
+    /**
      * Load the config.php file for a particular theme, and return an instance
      * of this class. (That is, this is a factory method.)
      *

@@ -64,6 +64,10 @@ class blog_entry implements renderable {
     // Other class variables.
     public $form;
     public $tags = array();
+    public $summaryformat;//dynamically created, deprecated php feature
+    public $summarytrust;
+    public $courseassoc;
+    public $modassoc;
 
     /** @var StdClass Data needed to render the entry */
     public $renderable;

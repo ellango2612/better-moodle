@@ -173,6 +173,36 @@ class grade_grade extends grade_object {
     public $aggregationweight = null;
 
     /**
+     * avoiding deprecated php featuer
+     * @var ? $historyid
+     */
+    public $historyid = null;
+
+    /**
+     * avoiding deprecated php featuer
+     * @var ? $feedback
+     */
+    public $feedback = null;
+
+    /**
+     * avoiding deprecated php featuer
+     * @var ? $feedbackformat
+     */
+    public $feedbackformat = 0;
+
+    /**
+     * avoiding deprecated php featuer
+     * @var ? $information
+     */
+    public $information = null;
+
+    /**
+     * avoiding deprecated php featuer
+     * @var ? $informationformat
+     */
+    public $informationformat = 0;
+
+    /**
      * Feedback files to copy.
      *
      * Example -

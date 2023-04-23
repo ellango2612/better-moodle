@@ -746,6 +746,13 @@ class PHPMailer
     protected $uniqueid = '';
 
     /**
+     * Version, avoiding deprecated php feature
+     *
+     * @var string
+     */
+    protected $Version = '';
+
+    /**
      * The PHPMailer Version number.
      *
      * @var string

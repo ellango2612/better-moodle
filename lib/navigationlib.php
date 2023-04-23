@@ -2206,7 +2206,7 @@ class global_navigation extends navigation_node {
             // Clone and unset summary to prevent $SESSION bloat (MDL-31802).
             $sections[$key] = clone($section);
             unset($sections[$key]->summary);
-            $sections[$key]->hasactivites = false;
+            $sections[$key]->hasactivities = false;
             if (!array_key_exists($section->section, $modinfo->sections)) {
                 continue;
             }
@@ -2236,7 +2236,7 @@ class global_navigation extends navigation_node {
                 }
                 $activities[$cmid] = $activity;
                 if ($activity->display) {
-                    $sections[$key]->hasactivites = true;
+                    $sections[$key]->hasactivities = true;
                 }
             }
         }

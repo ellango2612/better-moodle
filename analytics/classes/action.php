@@ -71,6 +71,11 @@ abstract class action {
     protected $text = null;
 
     /**
+     * @var Action
+     */
+    protected $type = null;
+
+    /**
      * Returns the action name.
      *
      * @return string

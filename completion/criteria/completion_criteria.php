@@ -152,6 +152,9 @@ abstract class completion_criteria extends data_object {
     /* @var int Role ID that has the ability to mark a user as complete (for role completion) */
     public $role;
 
+    public $courseinstance;
+    public $timeend;
+
     /**
      * Finds and returns all data_object instances based on params.
      *

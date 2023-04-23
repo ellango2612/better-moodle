@@ -131,7 +131,7 @@ class result implements \renderable {
      * @param string $details as a html chunk
      */
     public function __construct($status, $summary, $details = '') {
-        $this->status = $status;
+        $this->state = $status;
         $this->summary = $summary;
         $this->details = $details;
     }
@@ -142,7 +142,7 @@ class result implements \renderable {
      * @return string one of the consts eg result::OK
      */
     public function get_status(): string {
-        return $this->status;
+        return $this->state;
     }
 
     /**
@@ -169,14 +169,14 @@ class result implements \renderable {
      */
     public function export_for_template(\renderer_base $output) {
         return array(
-            'status'        => clean_text(get_string('status' . $this->status)),
-            'isna'          => $this->status === self::NA,
-            'isok'          => $this->status === self::OK,
-            'isinfo'        => $this->status === self::INFO,
-            'isunknown'     => $this->status === self::UNKNOWN,
-            'iswarning'     => $this->status === self::WARNING,
-            'iserror'       => $this->status === self::ERROR,
-            'iscritical'    => $this->status === self::CRITICAL,
+            'status'        => clean_text(get_string('status' . $this->state)),
+            'isna'          => $this->state === self::NA,
+            'isok'          => $this->state === self::OK,
+            'isinfo'        => $this->state === self::INFO,
+            'isunknown'     => $this->state === self::UNKNOWN,
+            'iswarning'     => $this->state === self::WARNING,
+            'iserror'       => $this->state === self::ERROR,
+            'iscritical'    => $this->state === self::CRITICAL,
         );
     }
 

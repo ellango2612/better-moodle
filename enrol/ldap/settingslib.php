@@ -28,6 +28,8 @@ defined('MOODLE_INTERNAL') || die();
 class admin_setting_configtext_trim_lower extends admin_setting_configtext {
     /* @var boolean whether to lowercase the value or not before writing in to the db */
     private $lowercase;
+    /* @var boolean avoiding deprecated php feature - maybe this should be in a parent? i.e. flags in admin setting */
+    private $enabled;
 
     /**
      * Constructor: uses parent::__construct

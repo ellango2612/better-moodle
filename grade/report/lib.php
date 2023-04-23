@@ -154,6 +154,10 @@ abstract class grade_report {
      */
     protected $userwheresql_params = array();
 
+    public $preferences_page; //supress deprecated warning
+    public $users;
+    public $userselect_params;
+
     /**
      * Constructor. Sets local copies of user preferences and initialises grade_tree.
      * @param int $courseid
